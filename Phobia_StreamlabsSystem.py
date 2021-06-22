@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "1.0.4"
+Version = "1.1.0"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
@@ -94,7 +94,9 @@ GHOSTS = {
 	'Oni': [Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
 	'Poltergeist': [Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
 	'Spirit': [Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
-	'Wraith': [Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS]
+	'Wraith': [Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
+	'Hantu': [Evidence.FINGERPRINTS, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING],
+	'Yokai': [Evidence.SPIRIT_BOX, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING]
 }
 
 GHOSTINFO = {
@@ -109,7 +111,9 @@ GHOSTINFO = {
     'Oni': 'Oni\'s are a cousin to the Demon and possess the extreme strength. There have been rumours that they become more active around their prey. Unique Strengths: Oni\'s are more active when people are nearby and have been seen moving objects at great speed. Weaknesses: Being more active will make the Oni easier to find and identify. Evidence: EMF Level 5, Spirit Box and Ghost Writing',
     'Poltergeist': 'One of the most famous Ghosts, a Poltergeist, also known as a noisy ghost can manipulate objects around it to spread fear into it\'s victims. Unique Strengths: A Poltergeist can throw huge amounts of objects at once. Weaknesses: A Poltergeist is almost ineffective in an empty room. Evidence: Spirit Box, Fingerprints and Ghost Orb',
     'Spirit': 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death. Unique Strengths: Nothing Weaknesses: Using Smudge Sticks on a Spirit will stop it attacking for a long period of time. Evidence: Spirit Box, Fingerprints and Ghost Writing',
-    'Wraith': 'A Wraith is one of the most dangerous Ghosts you will find. It is also the only known Ghost that has the ability of flight and has sometimes been known to travel through walls. Unique Strengths: Wraiths almost never touch the ground meaning it can\'t always be tracked by footsteps. Weaknesses: Wraiths have a toxic reaction to Salt. Evidence: Fingerprints, Freezing Temperatures and Spirit Box'
+    'Wraith': 'A Wraith is one of the most dangerous Ghosts you will find. It is also the only known Ghost that has the ability of flight and has sometimes been known to travel through walls. Unique Strengths: Wraiths almost never touch the ground meaning it can\'t always be tracked by footsteps. Weaknesses: Wraiths have a toxic reaction to Salt. Evidence: Fingerprints, Freezing Temperatures and Spirit Box',
+	'Hantu': 'A rare ghost that can be found in hot climates. They are known to attack more often in cold weather. Unique Strengths: Moves faster in colder areas. Weaknesses: Moves slower in warmer areas. Evidence: Fingerprints, Ghost Orb, Ghost Writing',
+	'Yokai': 'A common type of ghost that is attracted to human voices. They can usually be found haunting family homes. Unique Strengths: Talking near a Yokai will anger it and cause it to attack more often. Weaknesses: While hunting, it can only hear voices close to it. Evidence: Spirit Box, Ghost Orb, Ghost Writing'
 }
 
 Evidence1 = None

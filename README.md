@@ -49,6 +49,9 @@ The following files are updated (or empty) with the evidence or ghost type:
 
 # Changes
 
+- 1.1.0
+  - Added new ghosts: Hantu and Yokai
+
 - 1.0.4
   - Ghostname is no longer forced to lower case
 
