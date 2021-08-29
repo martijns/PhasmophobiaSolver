@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "1.2.0"
+Version = "1.0.4"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
@@ -99,7 +99,7 @@ GHOSTS = {
 	'Wraith': [Evidence.EMF_LEVEL_5, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
 	'Yokai': [Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
 	'Hantu': [Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS, Evidence.GHOST_ORBS],
-	'Myling': [Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS, Evidence.DOTS_PROJECTOR],
+	'Myling': [Evidence.FINGERPRINTS, Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING],
 	'Goryo': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR]
 }
 
@@ -107,7 +107,7 @@ GHOSTINFO = {
     'Shade': 'A Shade is known to be a Shy Ghost. There is evidence that a Shade will stop all paranormal activity if there are multiple people nearby. Unique Strengths: Being shy means the Ghost will be harder to find. Weaknesses: The Ghost will not enter hunting mode if there is multiple people nearby. Evidence: EMF 5, Ghost Writing, Freezing Temperatures',
     'Phantom': 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death. Unique Strengths: Looking at a Phantom will considerably drop your sanity. Weaknesses: Taking a photo of the Phantom will make it temporarily disappear. Evidence: Spirit Box, Fingerprints, DOTS Projector',
     'Jinn': 'A Jinn is territorial Ghost that will attack when threatened. It has also been known to be able to travel at significant speed. Unique Strengths: A Jinn will travel at a faster speed if it\'s victim is far away. Weaknesses: Turning off the locations power source will prevent the Jinn from using it\'s ability. Evidence: EMF Level 5, Freezing Temperatures, Fingerprint',
-    'Yurei': 'A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred. Unique Strengths: Yurei\'s have been known to have a stronger effect on people\'s sanity. Weaknesses: Smudging the Yurei\'s room will cause it to not wander around the location for a long time. Evidence: Ghost Orb, Ghost Writing and Freezing Temperatures',
+    'Yurei': 'A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred. Unique Strengths: Yurei\'s have been known to have a stronger effect on people\'s sanity. Weaknesses: Smudging the Yurei\'s room will cause it to not wander around the location for a long time. Evidence: Ghost Orbs, Freezing Temperatures, DOTS Projector',
     'Mare': 'A Mare is the source of all nightmares, making it most powerful in the dark. Unique Strengths: A Mare will have an increased chance to attack in the dark. Weaknesses: Turning the lights on around the Mare will lower it\'s chance to attack. Evidence: Ghost Orbs, Ghost Writing, Spirit Box',
     'Demon': 'A Demon is one of the worst Ghosts you can encounter. It has been known to attack without a reason. Unique Strengths: Demons will attack more often then any other Ghost. Weaknesses: Asking a Demon successful questions on the Ouija Board won\'t lower the users sanity. Evidence: Freezing Temperatures, Ghost Writing, Fingerprints',
     'Banshee': 'A Banshee is a natural hunter and will attack anything. It has been known to stalk it\'s prey one at a time until making it\'s kill. Unique Strengths: A Banshee will only target one person at a time. Weaknesses: Banshees fear the Crucifix and will be less aggressive when near one. Evidence: Ghost Orbs, Fingerprints, DOTS Projector',
