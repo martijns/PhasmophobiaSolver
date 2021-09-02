@@ -163,14 +163,14 @@ def possibleGhostDescriber():
         saveFile(ResolvedGhostFile, '')
     saveFile(PossibleGhostsFile, ghostComboDescriptor)
     return ghostComboDescriptor
-	
+    
 def updateImage(evidence, eventName):
-	global ImageData
-	if(evidence = '')
-		ImageData = {"srclink": '', "height": 500 }
-	else
-		ImageData = {"srclink": os.path.join(os.path.dirname(__file__), "Images", Evidence1, ".png"), "height": 500 }
-	Parent.BroadcastWsEvent(eventName,str(ImageData).replace("'",'"'))
+    global ImageData
+    if(evidence == ''):
+        ImageData = {"srclink": '', "height": 500 }
+    else:
+        ImageData = {"srclink": "Images\\" + evidence +".png", "height": 500 }
+    Parent.BroadcastWsEvent(eventName,str(ImageData).replace("'",'"'))
 
 #---------------------------------------
 # Chatbot Initialize Function
@@ -212,7 +212,7 @@ def Execute(data):
             Evidence1 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
             if Evidence1:
                 saveFile(Evidence1File, Evidence1 or '')
-				UpdateImage(Evidence1 or '','ev1Image')
+                updateImage(Evidence1 or '','ev1Image')
                 Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}. {}".format(Evidence1, possibleGhostDescriber()))
             else:
                 Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
@@ -226,7 +226,8 @@ def Execute(data):
             Evidence2 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
             if Evidence2:
                 saveFile(Evidence2File, Evidence2 or '')
-                UpdateImage(Evidence2 or '','ev2Image')
+                updateImage(Evidence2 or '','ev2Image')
+                Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}. {}".format(Evidence2, possibleGhostDescriber()))
             else:
                 Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
         else:
@@ -239,7 +240,7 @@ def Execute(data):
             Evidence3 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
             if Evidence3:
                 saveFile(Evidence3File, Evidence3 or '')
-				UpdateImage(Evidence3 or '','ev3Image')
+                updateImage(Evidence3 or '','ev3Image')
                 Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}. {}".format(Evidence3, possibleGhostDescriber()))
             else:
                 Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
@@ -272,6 +273,9 @@ def Execute(data):
         saveFile(ResolvedGhostFile, '')
         saveFile(GhostNameFile, '')
         saveFile(PossibleGhostsFile,'')
+        updateImage('','ev1Image')
+        updateImage('','ev2Image')
+        updateImage('','ev3Image')
         Parent.SendStreamMessage("/me [PS] Cleared")
 
     # Respond to stuff like !banshee

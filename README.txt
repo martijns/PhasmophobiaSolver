@@ -4,6 +4,9 @@ Phasmophobia Solver lets your chat help keep track of collected evidence. When e
 bot will inform chat of the remaining possibilities. Users can also type the !<ghosttype> to get more information about the ghosts.
 
 Textfiles are updated in order to display the contents on stream.
+HTML files are updated if you'd like to display and image on stream as a browser source, recommended 500 x 500 size
+
+If you'd like to use your own image, simply replace the image in the file as a png (recommend 500px x 500px with transparency) 
 
 # Commands
 
@@ -12,8 +15,8 @@ The following commands are available:
 - !ev1 - set evidence #1
 - !ev2 - set evidence #2
 - !ev3 - set evidence #3
-- !evreset - reset evidence
 - !ghostinfo Get a list of the ghost name and current evidence, with possible ghosts left
+- !evreset - reset evidence
 
 # Files
 
@@ -25,7 +28,15 @@ The following files are updated (or empty) with the evidence or ghost type:
 - resolved_ghost.txt
 - ghost_name.txt
 
+These files are updated for the image overlay:
+- ev1.html
+- ev2.html
+- ev3.html
+
 # Changes
+- 2.0
+	-Added support for image overlays! Now you can piecemeal this overlay how you would like with images or text.
+
 - 1.2
 	-Added two ghost types; The Goryo and Myling, added ghostinfo command, added possible ghost text, updated all evidence to match the reshuffling of evidence, updated descriptions with the new evidence types.
 
