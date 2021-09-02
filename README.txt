@@ -4,9 +4,25 @@ Phasmophobia Solver lets your chat help keep track of collected evidence. When e
 bot will inform chat of the remaining possibilities. Users can also type the !<ghosttype> to get more information about the ghosts.
 
 Textfiles are updated in order to display the contents on stream.
-HTML files are updated if you'd like to display and image on stream as a browser source, recommended 500 x 500 size
+HTML files are updated if you'd like to display and image on stream as a browser source
 
-If you'd like to use your own image, simply replace the image in the file as a png (recommend 500px x 500px with transparency) 
+Image Overlay Setup:
+  1) Right click script in scripts tab of Streamlabs Chatbot and click Insert API Key
+  2) Add a browser source to your streaming software and select the html file in the script folder
+  - Local File must be checked
+  - Copy the file location and name into the field
+  - Recommended setting the size as 500 x 500 (it fits nicely)
+  3) Repeat for each html file
+  
+If you'd like to use your own image, simply replace the image in the file as a png (recommend 500px x 500px with transparency)
+
+Text Overlay Setup:
+  1) Add Text source (GDI+) to your scene
+  2) Select Read From File and browse to the files folder where script is located
+  3) Play with the alignments, Custome Text Extents, size, graidents and color to your taste
+  3) Repeat for each of the #Files below that you would like on your scene
+
+Feel free to mix, match, and customize elements to make it fit your style and scene!
 
 # Commands
 
