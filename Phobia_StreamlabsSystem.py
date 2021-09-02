@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "1.1.0"
+Version = "1.2.0"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
@@ -42,6 +42,7 @@ Evidence2File = os.path.join(os.path.dirname(__file__), "files", "evidence2.txt"
 Evidence3File = os.path.join(os.path.dirname(__file__), "files", "evidence3.txt")
 ResolvedGhostFile = os.path.join(os.path.dirname(__file__), "files", "resolved_ghost.txt")
 GhostNameFile = os.path.join(os.path.dirname(__file__), "files", "ghost_name.txt")
+PossibleGhostsFile = os.path.join(os.path.dirname(__file__), "files", "possible_ghosts.txt")
 
 #---------------------------------------
 # Script Classes
@@ -79,41 +80,46 @@ class Evidence:
 	FREEZING_TEMPS = 'Freezing Temps'
 	SPIRIT_BOX = 'Spirit Box'
 	FINGERPRINTS = 'Fingerprints'
+	DOTS_PROJECTOR = 'DOTS Projector'
 
-EVIDENCES = [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS]
+EVIDENCES = [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR]
 
 GHOSTS = {
-	'Shade': [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING],
-	'Phantom': [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.FREEZING_TEMPS],
-	'Jinn': [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX],
-	'Yurei': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS],
-	'Mare': [Evidence.GHOST_ORBS, Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX],
-	'Demon': [Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX],
-	'Banshee': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
-	'Revenant': [Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING, Evidence.FINGERPRINTS],
-	'Oni': [Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
-	'Poltergeist': [Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
-	'Spirit': [Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
-	'Wraith': [Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
-	'Hantu': [Evidence.FINGERPRINTS, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING],
-	'Yokai': [Evidence.SPIRIT_BOX, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING]
+	'Shade': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.GHOST_WRITING],
+	'Phantom': [Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR],
+	'Jinn': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
+	'Yurei': [Evidence.GHOST_ORBS, Evidence.DOTS_PROJECTOR, Evidence.FREEZING_TEMPS],
+	'Mare': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
+	'Demon': [Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
+	'Banshee': [Evidence.DOTS_PROJECTOR, Evidence.GHOST_ORBS, Evidence.FINGERPRINTS],
+	'Revenant': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS],
+	'Oni': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.DOTS_PROJECTOR],
+	'Poltergeist': [Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
+	'Spirit': [Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
+	'Wraith': [Evidence.EMF_LEVEL_5, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
+	'Yokai': [Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
+	'Hantu': [Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS, Evidence.GHOST_ORBS],
+	'Myling': [Evidence.FINGERPRINTS, Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING],
+	'Goryo': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR]
 }
 
 GHOSTINFO = {
-    'Shade': 'A Shade is known to be a Shy Ghost. There is evidence that a Shade will stop all paranormal activity if there are multiple people nearby. Unique Strengths: Being shy means the Ghost will be harder to find. Weaknesses: The Ghost will not enter hunting mode if there is multiple people nearby. Evidence: EMF Level 5, Ghost Orb and Ghost Writing',
-    'Phantom': 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death. Unique Strengths: Looking at a Phantom will considerably drop your sanity. Weaknesses: Taking a photo of the Phantom will make it temporarily disappear. Evidence: EMF Level 5, Ghost Orb and Freezing Temperatures',
-    'Jinn': 'A Jinn is territorial Ghost that will attack when threatened. It has also been known to be able to travel at significant speed. Unique Strengths: A Jinn will travel at a faster speed if it\'s victim is far away. Weaknesses: Turning off the locations power source will prevent the Jinn from using it\'s ability. Evidence: Spirit Box, Ghost Orb and EMF Level 5',
-    'Yurei': 'A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred. Unique Strengths: Yurei\'s have been known to have a stronger effect on people\'s sanity. Weaknesses: Smudging the Yurei\'s room will cause it to not wander around the location for a long time. Evidence: Ghost Orb, Ghost Writing and Freezing Temperatures',
-    'Mare': 'A Mare is the source of all nightmares, making it most powerful in the dark. Unique Strengths: A Mare will have an increased chance to attack in the dark. Weaknesses: Turning the lights on around the Mare will lower it\'s chance to attack. Evidence: Spirit Box, Ghost Orb and Freezing temperatures',
-    'Demon': 'A Demon is one of the worst Ghosts you can encounter. It has been known to attack without a reason. Unique Strengths: Demons will attack more often then any other Ghost. Weaknesses: Asking a Demon successful questions on the Ouija Board won\'t lower the users sanity. Evidence: Spirit Box, Ghost Writing and Freezing Temperatures',
-    'Banshee': 'A Banshee is a natural hunter and will attack anything. It has been known to stalk it\'s prey one at a time until making it\'s kill. Unique Strengths: A Banshee will only target one person at a time. Weaknesses: Banshees fear the Crucifix and will be less aggressive when near one. Evidence: EMF Level 5, Fingerprints and Freezing Temperatures.',
-    'Revenant': 'A Revenant is a slow but violent Ghost that will attack indiscriminately. It has been rumoured to travel at a significantly high speed when hunting. Unique Strengths: A Revenant will travel at a significantly faster speed when hunting a victim. Weaknesses: Hiding from the Revenant will cause it to move very slowly. Evidence: EMF Level 5, Fingerprints and Ghost Writing',
-    'Oni': 'Oni\'s are a cousin to the Demon and possess the extreme strength. There have been rumours that they become more active around their prey. Unique Strengths: Oni\'s are more active when people are nearby and have been seen moving objects at great speed. Weaknesses: Being more active will make the Oni easier to find and identify. Evidence: EMF Level 5, Spirit Box and Ghost Writing',
-    'Poltergeist': 'One of the most famous Ghosts, a Poltergeist, also known as a noisy ghost can manipulate objects around it to spread fear into it\'s victims. Unique Strengths: A Poltergeist can throw huge amounts of objects at once. Weaknesses: A Poltergeist is almost ineffective in an empty room. Evidence: Spirit Box, Fingerprints and Ghost Orb',
-    'Spirit': 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death. Unique Strengths: Nothing Weaknesses: Using Smudge Sticks on a Spirit will stop it attacking for a long period of time. Evidence: Spirit Box, Fingerprints and Ghost Writing',
-    'Wraith': 'A Wraith is one of the most dangerous Ghosts you will find. It is also the only known Ghost that has the ability of flight and has sometimes been known to travel through walls. Unique Strengths: Wraiths almost never touch the ground meaning it can\'t always be tracked by footsteps. Weaknesses: Wraiths have a toxic reaction to Salt. Evidence: Fingerprints, Freezing Temperatures and Spirit Box',
-	'Hantu': 'A rare ghost that can be found in hot climates. They are known to attack more often in cold weather. Unique Strengths: Moves faster in colder areas. Weaknesses: Moves slower in warmer areas. Evidence: Fingerprints, Ghost Orb, Ghost Writing',
-	'Yokai': 'A common type of ghost that is attracted to human voices. They can usually be found haunting family homes. Unique Strengths: Talking near a Yokai will anger it and cause it to attack more often. Weaknesses: While hunting, it can only hear voices close to it. Evidence: Spirit Box, Ghost Orb, Ghost Writing'
+    'Shade': 'A Shade is known to be a Shy Ghost. There is evidence that a Shade will stop all paranormal activity if there are multiple people nearby. Unique Strengths: Being shy means the Ghost will be harder to find. Weaknesses: The Ghost will not enter hunting mode if there is multiple people nearby. Evidence: EMF 5, Ghost Writing, Freezing Temperatures',
+    'Phantom': 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death. Unique Strengths: Looking at a Phantom will considerably drop your sanity. Weaknesses: Taking a photo of the Phantom will make it temporarily disappear. Evidence: Spirit Box, Fingerprints, DOTS Projector',
+    'Jinn': 'A Jinn is territorial Ghost that will attack when threatened. It has also been known to be able to travel at significant speed. Unique Strengths: A Jinn will travel at a faster speed if it\'s victim is far away. Weaknesses: Turning off the locations power source will prevent the Jinn from using it\'s ability. Evidence: EMF Level 5, Freezing Temperatures, Fingerprint',
+    'Yurei': 'A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred. Unique Strengths: Yurei\'s have been known to have a stronger effect on people\'s sanity. Weaknesses: Smudging the Yurei\'s room will cause it to not wander around the location for a long time. Evidence: Ghost Orbs, Freezing Temperatures, DOTS Projector',
+    'Mare': 'A Mare is the source of all nightmares, making it most powerful in the dark. Unique Strengths: A Mare will have an increased chance to attack in the dark. Weaknesses: Turning the lights on around the Mare will lower it\'s chance to attack. Evidence: Ghost Orbs, Ghost Writing, Spirit Box',
+    'Demon': 'A Demon is one of the worst Ghosts you can encounter. It has been known to attack without a reason. Unique Strengths: Demons will attack more often then any other Ghost. Weaknesses: Asking a Demon successful questions on the Ouija Board won\'t lower the users sanity. Evidence: Freezing Temperatures, Ghost Writing, Fingerprints',
+    'Banshee': 'A Banshee is a natural hunter and will attack anything. It has been known to stalk it\'s prey one at a time until making it\'s kill. Unique Strengths: A Banshee will only target one person at a time. Weaknesses: Banshees fear the Crucifix and will be less aggressive when near one. Evidence: Ghost Orbs, Fingerprints, DOTS Projector',
+    'Revenant': 'A Revenant is a slow but violent Ghost that will attack indiscriminately. It has been rumoured to travel at a significantly high speed when hunting. Unique Strengths: A Revenant will travel at a significantly faster speed when hunting a victim. Weaknesses: Hiding from the Revenant will cause it to move very slowly. Evidence: Ghost Orbs, Ghost Writing, Freezing Temperatures',
+    'Oni': 'Oni\'s are a cousin to the Demon and possess the extreme strength. There have been rumours that they become more active around their prey. Unique Strengths: Oni\'s are more active when people are nearby and have been seen moving objects at great speed. Weaknesses: Being more active will make the Oni easier to find and identify. Evidence: EMF Level 5, Freezing Temperature, DOTS Projector',
+    'Poltergeist': 'One of the most famous Ghosts, a Poltergeist, also known as a noisy ghost can manipulate objects around it to spread fear into it\'s victims. Unique Strengths: A Poltergeist can throw huge amounts of objects at once. Weaknesses: A Poltergeist is almost ineffective in an empty room. Evidence: Ghost Writing, Spirit Box, Fingerprints',
+    'Spirit': 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death. Unique Strengths: Nothing Weaknesses: Using Smudge Sticks on a Spirit will stop it attacking for a long period of time. Evidence: EMF Level 5, Ghost Writing, Spirit Box',
+    'Wraith': 'A Wraith is one of the most dangerous Ghosts you will find. It is also the only known Ghost that has the ability of flight and has sometimes been known to travel through walls. Unique Strengths: Wraiths almost never touch the ground meaning it can\'t always be tracked by footsteps. Weaknesses: Wraiths have a toxic reaction to Salt. Evidence: EMF Level 5, Spirit Box, DOTS Projector',
+    'Yokai': 'A common type of ghost that is attracted to human voices. They can usually be found haunting family homes. Unique Strengths: Talking near a Yokai will anger it and cause it to attack more often. Weaknesses: While hunting, it can only hear voices close to it Evidence: Ghost Orbs, Spirit Box, DOTS Projector',
+    'Hantu': 'A rare ghost that can be found in hot climates. They are known to attack more often in cold weather. Unique Strengths: Moves faster in colder areas. Weaknesses: Moves slower in warmer areas. Evidence: Fingerprints, Ghost Orb, Freezing Temperatures',
+    'Goryo': 'Using a video camera is the only way to view a Goryo, when it passes through a DOTS projector. Unique Strengths: A Goryo will usually only show itself on camera if there are no people nearby. Weaknesses: They are rarely seen far from their place of death. Evidence: EMF Level 5, Fingerprints, D.O.T.S. Projector',
+    'Myling': 'A Myling is a very vocal and active ghost. They are rumoured to be quiet when hunting their prey. Unique Strengths: A Myling is known to be quieter when hunting. Weaknesses: Mylings more frequently make paranormal sounds. Evidence: EMF Level 5, Fingerprints, Ghost Writing'
 }
 
 Evidence1 = None
@@ -143,6 +149,21 @@ def possibleGhosts():
 	if Evidence3:
 		ghosts = [x for x in ghosts if Evidence3 in GHOSTS[x]]
 	return ghosts
+	
+def possibleGhostDescriber():
+	global ghostComboDescriptor
+	ghosts = possibleGhosts()
+	if len(ghosts) == 0:
+		ghostComboDescriptor = 'No ghost for this combination'
+		saveFile(ResolvedGhostFile, '')
+	if len(ghosts) == 1:
+		ghostComboDescriptor = 'Ghost must be a {}'.format(str.join(', ', ghosts or 'None'))
+		saveFile(ResolvedGhostFile, ghosts[0] or '')
+	if len(ghosts) > 1:
+		ghostComboDescriptor = 'Ghost could be any of: {}'.format(str.join(', ', ghosts or 'None'))
+		saveFile(ResolvedGhostFile, '')
+	saveFile(PossibleGhostsFile, ghostComboDescriptor)
+	return ghostComboDescriptor
 
 #---------------------------------------
 # Chatbot Initialize Function
@@ -184,16 +205,7 @@ def Execute(data):
 			Evidence1 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
 			if Evidence1:
 				saveFile(Evidence1File, Evidence1 or '')
-				ghosts = possibleGhosts()
-				if len(ghosts) == 0:
-					Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}, no ghost for this combination ({},{},{})".format(Evidence1, Evidence1, Evidence2, Evidence3))
-					saveFile(ResolvedGhostFile, '')
-				if len(ghosts) == 1:
-					Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}, ghost must be a {}".format(Evidence1, str.join(', ', ghosts or 'None')))
-					saveFile(ResolvedGhostFile, ghosts[0] or '')
-				if len(ghosts) > 1:
-					Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}, ghost could be any of: {}".format(Evidence1, str.join(', ', ghosts or 'None')))
-					saveFile(ResolvedGhostFile, '')
+				Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}. {}".format(Evidence1, possibleGhostDescriber()))
 			else:
 				Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
 		else:
@@ -206,16 +218,7 @@ def Execute(data):
 			Evidence2 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
 			if Evidence2:
 				saveFile(Evidence2File, Evidence2 or '')
-				ghosts = possibleGhosts()
-				if len(ghosts) == 0:
-					Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}, no ghost for this combination ({},{},{})".format(Evidence2, Evidence1, Evidence2, Evidence3))
-					saveFile(ResolvedGhostFile, '')
-				if len(ghosts) == 1:
-					Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}, ghost must be a {}".format(Evidence2, str.join(', ', ghosts or 'None')))
-					saveFile(ResolvedGhostFile, ghosts[0] or '')
-				if len(ghosts) > 1:
-					Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}, ghost could be any of: {}".format(Evidence2, str.join(', ', ghosts or 'None')))
-					saveFile(ResolvedGhostFile, '')
+				Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}. {}".format(Evidence2, possibleGhostDescriber()))
 			else:
 				Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
 		else:
@@ -228,16 +231,7 @@ def Execute(data):
 			Evidence3 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
 			if Evidence3:
 				saveFile(Evidence3File, Evidence3 or '')
-				ghosts = possibleGhosts()
-				if len(ghosts) == 0:
-					Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}, no ghost for this combination ({},{},{})".format(Evidence3, Evidence1, Evidence2, Evidence3))
-					saveFile(ResolvedGhostFile, '')
-				if len(ghosts) == 1:
-					Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}, ghost must be a {}".format(Evidence3, str.join(', ', ghosts or 'None')))
-					saveFile(ResolvedGhostFile, ghosts[0] or '')
-				if len(ghosts) > 1:
-					Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}, ghost could be any of: {}".format(Evidence3, str.join(', ', ghosts or 'None')))
-					saveFile(ResolvedGhostFile, '')
+				Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}. {}".format(Evidence3, possibleGhostDescriber()))
 			else:
 				Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
 		else:
@@ -252,6 +246,11 @@ def Execute(data):
 		else:
 			Parent.SendStreamMessage("/me [PS] Name's currently: {}".format(GhostName))
 
+
+# Grab the info as it stands right now
+	if data.GetParam(0).lower() in ['!ghostinfo']:
+		Parent.SendStreamMessage("/me [PS] Name's currently: {}. Evidence #1 is {}, Evidence #2 is {}, Evidence #3 is {}. {}".format(GhostName, Evidence1, Evidence2, Evidence3, possibleGhostDescriber()))
+
 	# Allow reset with '!evreset'
 	if data.GetParam(0).lower() in ['!evreset']:
 		Evidence1 = None
@@ -263,6 +262,7 @@ def Execute(data):
 		saveFile(Evidence3File, '')
 		saveFile(ResolvedGhostFile, '')
 		saveFile(GhostNameFile, '')
+		saveFile(PossibleGhostsFile,'')
 		Parent.SendStreamMessage("/me [PS] Cleared")
 
 	# Respond to stuff like !banshee

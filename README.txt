@@ -13,6 +13,7 @@ The following commands are available:
 - !ev2 - set evidence #2
 - !ev3 - set evidence #3
 - !evreset - reset evidence
+- !ghostinfo Get a list of the ghost name and current evidence, with possible ghosts left
 
 # Files
 
@@ -20,10 +21,13 @@ The following files are updated (or empty) with the evidence or ghost type:
 - evidence1.txt
 - evidence2.txt
 - evidence3.txt
+- possibleghosts.txt
 - resolved_ghost.txt
 - ghost_name.txt
 
 # Changes
+- 1.2
+	-Added two ghost types; The Goryo and Myling, added ghostinfo command, added possible ghost text, updated all evidence to match the reshuffling of evidence, updated descriptions with the new evidence types.
 
 - 1.1.0
   - Added new ghosts: Hantu and Yokai
