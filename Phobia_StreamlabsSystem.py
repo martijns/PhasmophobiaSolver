@@ -14,9 +14,9 @@ import codecs
 import json
 import re
 try:
-	from streamlabs_stub import *
+    from streamlabs_stub import *
 except:
-	pass
+    pass
 
 #---------------------------------------
 # Script Information
@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "1.2.0"
+Version = "2.0.0"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
@@ -43,64 +43,63 @@ Evidence3File = os.path.join(os.path.dirname(__file__), "files", "evidence3.txt"
 ResolvedGhostFile = os.path.join(os.path.dirname(__file__), "files", "resolved_ghost.txt")
 GhostNameFile = os.path.join(os.path.dirname(__file__), "files", "ghost_name.txt")
 PossibleGhostsFile = os.path.join(os.path.dirname(__file__), "files", "possible_ghosts.txt")
-
 #---------------------------------------
 # Script Classes
 #---------------------------------------
 class Settings(object):
-	""" Load in saved settings file if available else set default values. """
-	def __init__(self, settingsfile=None):
-		try:
-			with codecs.open(settingsfile, encoding="utf-8-sig", mode="r") as f:
-				self.__dict__ = json.load(f, encoding="utf-8")
-		except:
-			pass
+    """ Load in saved settings file if available else set default values. """
+    def __init__(self, settingsfile=None):
+        try:
+            with codecs.open(settingsfile, encoding="utf-8-sig", mode="r") as f:
+                self.__dict__ = json.load(f, encoding="utf-8")
+        except:
+            pass
 
-	def Reload(self, jsondata):
-		""" Reload settings from Streamlabs user interface by given json data. """
-		self.__dict__ = json.loads(jsondata, encoding="utf-8")
+    def Reload(self, jsondata):
+        """ Reload settings from Streamlabs user interface by given json data. """
+        self.__dict__ = json.loads(jsondata, encoding="utf-8")
 
-	def Save(self, settingsfile):
-		""" Save settings contained within to .json and .js settings files. """
-		try:
-			with codecs.open(settingsfile, encoding="utf-8-sig", mode="w+") as f:
-				json.dump(self.__dict__, f, encoding="utf-8", ensure_ascii=False)
-			with codecs.open(settingsfile.replace("json", "js"), encoding="utf-8-sig", mode="w+") as f:
-				f.write("var settings = {0};".format(json.dumps(self.__dict__, encoding='utf-8', ensure_ascii=False)))
-		except:
-			Parent.Log(ScriptName, "Failed to save settings to file.")
+    def Save(self, settingsfile):
+        """ Save settings contained within to .json and .js settings files. """
+        try:
+            with codecs.open(settingsfile, encoding="utf-8-sig", mode="w+") as f:
+                json.dump(self.__dict__, f, encoding="utf-8", ensure_ascii=False)
+            with codecs.open(settingsfile.replace("json", "js"), encoding="utf-8-sig", mode="w+") as f:
+                f.write("var settings = {0};".format(json.dumps(self.__dict__, encoding='utf-8', ensure_ascii=False)))
+        except:
+            Parent.Log(ScriptName, "Failed to save settings to file.")
 
 #---------------------------------------
 # Phasmophobia-stuff
 #---------------------------------------
 class Evidence:
-	EMF_LEVEL_5 = 'EMF Level 5'
-	GHOST_ORBS = 'Ghost Orbs'
-	GHOST_WRITING = 'Ghost Writing'
-	FREEZING_TEMPS = 'Freezing Temps'
-	SPIRIT_BOX = 'Spirit Box'
-	FINGERPRINTS = 'Fingerprints'
-	DOTS_PROJECTOR = 'DOTS Projector'
+    EMF_LEVEL_5 = 'EMF Level 5'
+    GHOST_ORBS = 'Ghost Orbs'
+    GHOST_WRITING = 'Ghost Writing'
+    FREEZING_TEMPS = 'Freezing Temps'
+    SPIRIT_BOX = 'Spirit Box'
+    FINGERPRINTS = 'Fingerprints'
+    DOTS_PROJECTOR = 'DOTS Projector'
 
 EVIDENCES = [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR]
 
 GHOSTS = {
-	'Shade': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.GHOST_WRITING],
-	'Phantom': [Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR],
-	'Jinn': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
-	'Yurei': [Evidence.GHOST_ORBS, Evidence.DOTS_PROJECTOR, Evidence.FREEZING_TEMPS],
-	'Mare': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
-	'Demon': [Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
-	'Banshee': [Evidence.DOTS_PROJECTOR, Evidence.GHOST_ORBS, Evidence.FINGERPRINTS],
-	'Revenant': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS],
-	'Oni': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.DOTS_PROJECTOR],
-	'Poltergeist': [Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
-	'Spirit': [Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
-	'Wraith': [Evidence.EMF_LEVEL_5, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
-	'Yokai': [Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
-	'Hantu': [Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS, Evidence.GHOST_ORBS],
-	'Myling': [Evidence.FINGERPRINTS, Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING],
-	'Goryo': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR]
+    'Shade': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.GHOST_WRITING],
+    'Phantom': [Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR],
+    'Jinn': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
+    'Yurei': [Evidence.GHOST_ORBS, Evidence.DOTS_PROJECTOR, Evidence.FREEZING_TEMPS],
+    'Mare': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
+    'Demon': [Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS, Evidence.FINGERPRINTS],
+    'Banshee': [Evidence.DOTS_PROJECTOR, Evidence.GHOST_ORBS, Evidence.FINGERPRINTS],
+    'Revenant': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS],
+    'Oni': [Evidence.EMF_LEVEL_5, Evidence.FREEZING_TEMPS, Evidence.DOTS_PROJECTOR],
+    'Poltergeist': [Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS],
+    'Spirit': [Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING, Evidence.SPIRIT_BOX],
+    'Wraith': [Evidence.EMF_LEVEL_5, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
+    'Yokai': [Evidence.GHOST_ORBS, Evidence.SPIRIT_BOX, Evidence.DOTS_PROJECTOR],
+    'Hantu': [Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS, Evidence.GHOST_ORBS],
+    'Myling': [Evidence.FINGERPRINTS, Evidence.EMF_LEVEL_5, Evidence.GHOST_WRITING],
+    'Goryo': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.DOTS_PROJECTOR]
 }
 
 GHOSTINFO = {
@@ -132,151 +131,165 @@ GhostName = None
 #---------------------------------------
 
 def saveFile(filename, content):
-	try:
-		with open(filename, 'w') as writeFile:
-			writeFile.write(content)
-		Parent.Log(ScriptName, 'File {} updated with: {}'.format(filename, content))
-	except Exception as e:
-		Parent.Log(ScriptName, str(e.args))
+    try:
+        with open(filename, 'w') as writeFile:
+            writeFile.write(content)
+        Parent.Log(ScriptName, 'File {} updated with: {}'.format(filename, content))
+    except Exception as e:
+        Parent.Log(ScriptName, str(e.args))
 
 def possibleGhosts():
-	ghosts = GHOSTS.keys()
-	global Evidence1, Evidence2, Evidence3
-	if Evidence1:
-		ghosts = [x for x in ghosts if Evidence1 in GHOSTS[x]]
-	if Evidence2:
-		ghosts = [x for x in ghosts if Evidence2 in GHOSTS[x]]
-	if Evidence3:
-		ghosts = [x for x in ghosts if Evidence3 in GHOSTS[x]]
-	return ghosts
-	
+    ghosts = GHOSTS.keys()
+    global Evidence1, Evidence2, Evidence3
+    if Evidence1:
+        ghosts = [x for x in ghosts if Evidence1 in GHOSTS[x]]
+    if Evidence2:
+        ghosts = [x for x in ghosts if Evidence2 in GHOSTS[x]]
+    if Evidence3:
+        ghosts = [x for x in ghosts if Evidence3 in GHOSTS[x]]
+    return ghosts
+    
 def possibleGhostDescriber():
-	global ghostComboDescriptor
-	ghosts = possibleGhosts()
-	if len(ghosts) == 0:
-		ghostComboDescriptor = 'No ghost for this combination'
-		saveFile(ResolvedGhostFile, '')
-	if len(ghosts) == 1:
-		ghostComboDescriptor = 'Ghost must be a {}'.format(str.join(', ', ghosts or 'None'))
-		saveFile(ResolvedGhostFile, ghosts[0] or '')
-	if len(ghosts) > 1:
-		ghostComboDescriptor = 'Ghost could be any of: {}'.format(str.join(', ', ghosts or 'None'))
-		saveFile(ResolvedGhostFile, '')
-	saveFile(PossibleGhostsFile, ghostComboDescriptor)
-	return ghostComboDescriptor
+    global ghostComboDescriptor
+    ghosts = possibleGhosts()
+    if len(ghosts) == 0:
+        ghostComboDescriptor = 'No ghost for this combination'
+        saveFile(ResolvedGhostFile, '')
+    if len(ghosts) == 1:
+        ghostComboDescriptor = 'Ghost must be a {}'.format(str.join(', ', ghosts or 'None'))
+        saveFile(ResolvedGhostFile, ghosts[0] or '')
+    if len(ghosts) > 1:
+        ghostComboDescriptor = 'Ghost could be any of: {}'.format(str.join(', ', ghosts or 'None'))
+        saveFile(ResolvedGhostFile, '')
+    saveFile(PossibleGhostsFile, ghostComboDescriptor)
+    return ghostComboDescriptor
+    
+def updateImage(evidence, eventName):
+    global ImageData
+    if(evidence == ''):
+        ImageData = {"srclink": '', "height": 500 }
+    else:
+        ImageData = {"srclink": "Images\\" + evidence +".png", "height": 500 }
+    Parent.BroadcastWsEvent(eventName,str(ImageData).replace("'",'"'))
 
 #---------------------------------------
 # Chatbot Initialize Function
 #---------------------------------------
 def Init():
 
-	# Load settings from file and verify
-	global ScriptSettings
-	ScriptSettings = Settings(SettingsFile)
+    # Load settings from file and verify
+    global ScriptSettings
+    ScriptSettings = Settings(SettingsFile)
 
-	# End of Init
-	return
+    # End of Init
+    return
 
 #---------------------------------------
 # Chatbot Save Settings Function
 #---------------------------------------
 def ReloadSettings(jsondata):
 
-	# Reload newly saved settings and verify
-	ScriptSettings.Reload(jsondata)
+    # Reload newly saved settings and verify
+    ScriptSettings.Reload(jsondata)
 
-	# End of ReloadSettings
-	return
+    # End of ReloadSettings
+    return
 
 #---------------------------------------
 # Chatbot Execute Function
 #---------------------------------------
 def Execute(data):
 
-	if not data.IsChatMessage() or not data.IsFromTwitch() or data.IsWhisper():
-		return
+    if not data.IsChatMessage() or not data.IsFromTwitch() or data.IsWhisper():
+        return
 
-	global Evidence1, Evidence2, Evidence3, GhostName
+    global Evidence1, Evidence2, Evidence3, GhostName
 
-	# Set first evidence with !ev1
-	if data.GetParam(0).lower() in ['!ev1']:
-		param = str.join(' ', data.Message.split(' ')[1:]).lower()
-		if param:
-			Evidence1 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
-			if Evidence1:
-				saveFile(Evidence1File, Evidence1 or '')
-				Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}. {}".format(Evidence1, possibleGhostDescriber()))
-			else:
-				Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
-		else:
-			Parent.SendStreamMessage("/me [PS] Evidence #1 is currently {}, but can be any of: {}".format(Evidence1, str.join(', ', EVIDENCES)))
+    # Set first evidence with !ev1
+    if data.GetParam(0).lower() in ['!ev1']:
+        param = str.join(' ', data.Message.split(' ')[1:]).lower()
+        if param:
+            Evidence1 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
+            if Evidence1:
+                saveFile(Evidence1File, Evidence1 or '')
+                updateImage(Evidence1 or '','ev1Image')
+                Parent.SendStreamMessage("/me [PS] Evidence #1 set to {}. {}".format(Evidence1, possibleGhostDescriber()))
+            else:
+                Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
+        else:
+            Parent.SendStreamMessage("/me [PS] Evidence #1 is currently {}, but can be any of: {}".format(Evidence1, str.join(', ', EVIDENCES)))
 
-	# Set second evidence with !ev2
-	if data.GetParam(0).lower() in ['!ev2']:
-		param = str.join(' ', data.Message.split(' ')[1:]).lower()
-		if param:
-			Evidence2 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
-			if Evidence2:
-				saveFile(Evidence2File, Evidence2 or '')
-				Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}. {}".format(Evidence2, possibleGhostDescriber()))
-			else:
-				Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
-		else:
-			Parent.SendStreamMessage("/me [PS] Evidence #2 is currently {}, but can be any of: {}".format(Evidence2, str.join(', ', EVIDENCES)))
+    # Set second evidence with !ev2
+    if data.GetParam(0).lower() in ['!ev2']:
+        param = str.join(' ', data.Message.split(' ')[1:]).lower()
+        if param:
+            Evidence2 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
+            if Evidence2:
+                saveFile(Evidence2File, Evidence2 or '')
+                updateImage(Evidence2 or '','ev2Image')
+                Parent.SendStreamMessage("/me [PS] Evidence #2 set to {}. {}".format(Evidence2, possibleGhostDescriber()))
+            else:
+                Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
+        else:
+            Parent.SendStreamMessage("/me [PS] Evidence #2 is currently {}, but can be any of: {}".format(Evidence2, str.join(', ', EVIDENCES)))
 
-	# Set third evidence with !ev3
-	if data.GetParam(0).lower() in ['!ev3']:
-		param = str.join(' ', data.Message.split(' ')[1:]).lower()
-		if param:
-			Evidence3 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
-			if Evidence3:
-				saveFile(Evidence3File, Evidence3 or '')
-				Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}. {}".format(Evidence3, possibleGhostDescriber()))
-			else:
-				Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
-		else:
-			Parent.SendStreamMessage("/me [PS] Evidence #3 is currently {}, but can be any of: {}".format(Evidence3, str.join(', ', EVIDENCES)))
+    # Set third evidence with !ev3
+    if data.GetParam(0).lower() in ['!ev3']:
+        param = str.join(' ', data.Message.split(' ')[1:]).lower()
+        if param:
+            Evidence3 = next(iter([x for x in EVIDENCES if x.lower().startswith(param) or x.lower().endswith(param) or param in x.lower()] or []), None)
+            if Evidence3:
+                saveFile(Evidence3File, Evidence3 or '')
+                updateImage(Evidence3 or '','ev3Image')
+                Parent.SendStreamMessage("/me [PS] Evidence #3 set to {}. {}".format(Evidence3, possibleGhostDescriber()))
+            else:
+                Parent.SendStreamMessage("/me [PS] Couldn't find this type of evidence, pick from: {}".format(str.join(', ', EVIDENCES)))
+        else:
+            Parent.SendStreamMessage("/me [PS] Evidence #3 is currently {}, but can be any of: {}".format(Evidence3, str.join(', ', EVIDENCES)))
 
-	if data.GetParam(0).lower() in ['!ghostname']:
-		param = str.join(' ', data.Message.split(' ')[1:])
-		if param:
-			GhostName = param
-			saveFile(GhostNameFile, param or '')
-			Parent.SendStreamMessage("/me [PS] Name updated!")
-		else:
-			Parent.SendStreamMessage("/me [PS] Name's currently: {}".format(GhostName))
+    if data.GetParam(0).lower() in ['!ghostname']:
+        param = str.join(' ', data.Message.split(' ')[1:])
+        if param:
+            GhostName = param
+            saveFile(GhostNameFile, param or '')
+            Parent.SendStreamMessage("/me [PS] Name updated!")
+        else:
+            Parent.SendStreamMessage("/me [PS] Name's currently: {}".format(GhostName))
 
 
 # Grab the info as it stands right now
-	if data.GetParam(0).lower() in ['!ghostinfo']:
-		Parent.SendStreamMessage("/me [PS] Name's currently: {}. Evidence #1 is {}, Evidence #2 is {}, Evidence #3 is {}. {}".format(GhostName, Evidence1, Evidence2, Evidence3, possibleGhostDescriber()))
+    if data.GetParam(0).lower() in ['!ghostinfo']:
+        Parent.SendStreamMessage("/me [PS] Name's currently: {}. Evidence #1 is {}, Evidence #2 is {}, Evidence #3 is {}. {}".format(GhostName, Evidence1, Evidence2, Evidence3, possibleGhostDescriber()))
 
-	# Allow reset with '!evreset'
-	if data.GetParam(0).lower() in ['!evreset']:
-		Evidence1 = None
-		Evidence2 = None
-		Evidence3 = None
-		GhostName = None
-		saveFile(Evidence1File, '')
-		saveFile(Evidence2File, '')
-		saveFile(Evidence3File, '')
-		saveFile(ResolvedGhostFile, '')
-		saveFile(GhostNameFile, '')
-		saveFile(PossibleGhostsFile,'')
-		Parent.SendStreamMessage("/me [PS] Cleared")
+    # Allow reset with '!evreset'
+    if data.GetParam(0).lower() in ['!evreset']:
+        Evidence1 = None
+        Evidence2 = None
+        Evidence3 = None
+        GhostName = None
+        saveFile(Evidence1File, '')
+        saveFile(Evidence2File, '')
+        saveFile(Evidence3File, '')
+        saveFile(ResolvedGhostFile, '')
+        saveFile(GhostNameFile, '')
+        saveFile(PossibleGhostsFile,'')
+        updateImage('','ev1Image')
+        updateImage('','ev2Image')
+        updateImage('','ev3Image')
+        Parent.SendStreamMessage("/me [PS] Cleared")
 
-	# Respond to stuff like !banshee
-	if data.GetParam(0).startswith('!') and data.GetParam(0).lower()[1:] in [x.lower() for x in GHOSTINFO.keys()]:
-		query = data.GetParam(0).lower()[1:]
-		ghostname = next(iter([x for x in GHOSTINFO.keys() if x.lower() == query] or []), None)
-		info = GHOSTINFO[ghostname]
-		Parent.SendStreamMessage("/me [PS] {}: {}".format(ghostname, info))
+    # Respond to stuff like !banshee
+    if data.GetParam(0).startswith('!') and data.GetParam(0).lower()[1:] in [x.lower() for x in GHOSTINFO.keys()]:
+        query = data.GetParam(0).lower()[1:]
+        ghostname = next(iter([x for x in GHOSTINFO.keys() if x.lower() == query] or []), None)
+        info = GHOSTINFO[ghostname]
+        Parent.SendStreamMessage("/me [PS] {}: {}".format(ghostname, info))
 
 #---------------------------------------
 # Chatbot Tick Function
 #---------------------------------------
 def Tick():
-	pass
+    pass
 
 #---------------------------------------
 # Chatbot Button Function
