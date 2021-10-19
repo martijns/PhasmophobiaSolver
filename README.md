@@ -66,11 +66,15 @@ The following files can be used as browser source with updated images for eviden
 
 # Changes
 
-- 2.0
-	-Added support for image overlays! Now you can piecemeal this overlay how you would like with images or text.
+- 2.0.0
+  - Added support for image overlays! Now you can piecemeal this overlay how you would like with images or text.
 
-- 1.2
-	-Added two ghost types; The Goryo and Myling, added ghostinfo command, added possible ghost text, updated all evidence to match the reshuffling of evidence, updated descriptions with the new evidence types.
+- 1.2.0
+	- Added two ghost types: The Goryo and Myling
+	- Added ghostinfo command
+	- Added possible ghost text
+	- Updated all evidence to match the reshuffling of evidence
+	- updated descriptions with the new evidence types
 
 - 1.1.0
   - Added new ghosts: Hantu and Yokai
