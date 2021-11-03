@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "2.0.0"
+Version = "2.0.1"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
