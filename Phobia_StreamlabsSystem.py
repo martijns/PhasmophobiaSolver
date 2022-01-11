@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "2.0.1"
+Version = "2.0.2"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
@@ -103,7 +103,8 @@ GHOSTS = {
     'Twins': [Evidence.EMF_LEVEL_5, Evidence.SPIRIT_BOX, Evidence.FREEZING_TEMPS],
     'Raiju': [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.DOTS_PROJECTOR],
     'Onryo': [Evidence.SPIRIT_BOX, Evidence.GHOST_ORBS, Evidence.FREEZING_TEMPS],
-    'Obake': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.GHOST_ORBS]
+    'Obake': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.GHOST_ORBS],
+    'Mimic': [Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS]
 }
 
 GHOSTINFO = {
@@ -126,7 +127,8 @@ GHOSTINFO = {
     'Twins': 'These ghosts have been reported to mimic each other''s actions. They alternate their attacks to confuse their prey Strengths: Either Twin can be angered and initiate an attack on their prey. Weaknesses: The Twins will often interact with the environment at the same time.',
     'Raiju': 'A Raiju is a demon that thrives on electrical current. While generally calm, they can become agitated when overwhelmed with power. Strengths: A Raiju can siphon power from nearby electrical devices, making it move faster. Weaknesses: Raiju are constantly disrupting electronic equipment, making it easier to track when attacking.',
     'Onryo': 'The Onryo is often referred to as "The Wrathful Spirit." It steals souls from dying victims'' bodies to seek revenge. This ghost has been known to fear any form of fire, and will do anything to be far from it. Strength: Extinguishing a flame can cause an Onryo to attack. Weakness: When threatened, this ghost will be less likely to attack.',
-    'Obake': 'Obake are terrifying shape-shifters, capable of taking on many forms. They have been seen taking on humanoid shapes to attract their prey. Strength: When interacting with the environment, an Obake will rarely leave a trace. Weakness: Sometimes this ghost will shapeshift, leaving behind unique evidence.'
+    'Obake': 'Obake are terrifying shape-shifters, capable of taking on many forms. They have been seen taking on humanoid shapes to attract their prey. Strength: When interacting with the environment, an Obake will rarely leave a trace. Weakness: Sometimes this ghost will shapeshift, leaving behind unique evidence.',
+    'Mimic':'The Mimic is an elusive, mysterious, copycat ghost that mirrors traits and behaviours from others, including other ghost types. Strength: We''re unsure what this ghost is capable of. Be careful. Weakness: Several reports have noted ghost orb sightings near mimics.'
 }
 
 Evidence1 = None
