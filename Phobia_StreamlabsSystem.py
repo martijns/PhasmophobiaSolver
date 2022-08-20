@@ -28,6 +28,7 @@ Creator = "netripper"
 Version = "2.0.3"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
+SpecialThanks3 = "https://www.twitch.tv/GreatisNate" # Adding in image overlay, possible ghost info, fixing evidence rework, and adding new ghosts
 
 #---------------------------------------
 # Script Variables
