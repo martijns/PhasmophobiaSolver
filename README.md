@@ -65,7 +65,12 @@ The following files can be used as browser source with updated images for eviden
 - ev3.html
 
 # Changes
-
+- 2.0.3
+	- Added New Ghost Types: Thaye, Moroi, Deogen
+- 2.0.2
+	- Added New Ghost Types: The Mimic
+- 2.0.1
+	- Added New Ghost Types: Twins, Raiju, Onryo, and Obake
 - 2.0.0
   - Added support for image overlays! Now you can piecemeal this overlay how you would like with images or text.
 
@@ -99,7 +104,7 @@ The following files can be used as browser source with updated images for eviden
 
 - https://www.twitch.tv/itspatokay (The streamer that provided the idea)
 - https://www.twitch.tv/kruiser8 (This script will look familiar to RaidNotify of kruiser8, since I used their script as template)
-- https://github.com/GreatisNate (For adding visible evidence images via browser source)
+- https://www.twitch.tv/GreatisNate (For adding visible evidence images via browser source, and adding new ghosts)
 
 # Installation instructions (overlay + text)
 
