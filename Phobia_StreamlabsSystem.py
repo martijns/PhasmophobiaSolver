@@ -25,7 +25,7 @@ ScriptName = "Phasmophobia Solver"
 Website = "https://github.com/martijns"
 Description = "Let your chat indicate evidence and the script will find the matching ghost"
 Creator = "netripper"
-Version = "2.0.2"
+Version = "2.0.3"
 SpecialThanks = "https://www.twitch.tv/itspatokay" # The streamer that provided the idea
 SpecialThanks2 = "https://www.twitch.tv/kruiser8" # This script will look slightly familiar to RaidNotify of kruiser8, since it's my first script and I used their script as starting point
 
@@ -104,7 +104,10 @@ GHOSTS = {
     'Raiju': [Evidence.EMF_LEVEL_5, Evidence.GHOST_ORBS, Evidence.DOTS_PROJECTOR],
     'Onryo': [Evidence.SPIRIT_BOX, Evidence.GHOST_ORBS, Evidence.FREEZING_TEMPS],
     'Obake': [Evidence.EMF_LEVEL_5, Evidence.FINGERPRINTS, Evidence.GHOST_ORBS],
-    'Mimic': [Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS]
+    'Mimic': [Evidence.SPIRIT_BOX, Evidence.FINGERPRINTS, Evidence.FREEZING_TEMPS],
+    'Thaye': [Evidence.GHOST_ORBS, Evidence.GHOST_WRITING, Evidence.DOTS_PROJECTOR],
+    'Deogen': [Evidence.SPIRIT_BOX, Evidence.GHOST_WRITING, Evidence.DOTS_PROJECTOR],
+    'Moroi': [Evidence.SPIRIT_BOX, Evidence.GHOST_WRITING, Evidence.FREEZING_TEMPS]
 }
 
 GHOSTINFO = {
@@ -128,7 +131,10 @@ GHOSTINFO = {
     'Raiju': 'A Raiju is a demon that thrives on electrical current. While generally calm, they can become agitated when overwhelmed with power. Strengths: A Raiju can siphon power from nearby electrical devices, making it move faster. Weaknesses: Raiju are constantly disrupting electronic equipment, making it easier to track when attacking.',
     'Onryo': 'The Onryo is often referred to as "The Wrathful Spirit." It steals souls from dying victims'' bodies to seek revenge. This ghost has been known to fear any form of fire, and will do anything to be far from it. Strength: Extinguishing a flame can cause an Onryo to attack. Weakness: When threatened, this ghost will be less likely to attack.',
     'Obake': 'Obake are terrifying shape-shifters, capable of taking on many forms. They have been seen taking on humanoid shapes to attract their prey. Strength: When interacting with the environment, an Obake will rarely leave a trace. Weakness: Sometimes this ghost will shapeshift, leaving behind unique evidence.',
-    'Mimic':'The Mimic is an elusive, mysterious, copycat ghost that mirrors traits and behaviours from others, including other ghost types. Strength: We''re unsure what this ghost is capable of. Be careful. Weakness: Several reports have noted ghost orb sightings near mimics.'
+    'Mimic':'The Mimic is an elusive, mysterious, copycat ghost that mirrors traits and behaviours from others, including other ghost types. Strength: We''re unsure what this ghost is capable of. Be careful. Weakness: Several reports have noted ghost orb sightings near mimics.',
+    'Thaye': 'Thaye have been known to rapidly age over time, even in the afterlife. From what we''ve learned, they seem to deteriorate faster while within the presence of the living. Strength: Upon entering the location, Thaye will become active, defensive and agile Weakness: Thaye will weaken over time, making them weaker, slower and less aggressive',
+    'Deogen': 'Sometimes surrounded by an endless fog, Deogen have been eluding ghost hunters for years. These ghosts have been reported to find even the most hidden prey, before stalking them into exhaustion. Strength: Deogen constantly sense the living. You can run but you can''t hide. Weakness: Deogen require a lot of energy to form and will move very slowly when approaching its victim.',
+    'Moroi': 'Moroi have risen from the grave to drain energy from the living. They have been known to place curses on their victims, curable only by antidotes or moving very far away. Strength: The weaker their victims, the stronger the Moroi becomes. Weakness: Moroi suffer from hyperosmia, weakening them for longer periods.'
 }
 
 Evidence1 = None
